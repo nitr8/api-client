@@ -11,6 +11,16 @@ export default new Router({
       component: require('@/components/LandingPage').default
     },
     {
+      path: '/todo',
+      name: 'todos-page',
+      component: require('@/components/ToDos').default
+    },
+    {
+      path: '/about',
+      name: 'about-page',
+      component: require('@/components/About').default
+    },
+    {
       path: '*',
       redirect: '/'
     }

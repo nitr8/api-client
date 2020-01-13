@@ -1,42 +1,47 @@
 <template>
   <div id="wrapper">
-    <img id="logo" src="~@/assets/logo2.png" alt="electron-vue">
-    <main>
-      <div class="left-side">
-        <span class="title">
-          Information
-        </span>
-        <system-information></system-information>
-      </div>
-
-      <div class="right-side">
-        <div class="doc">
-          <div class="title">API Client</div>
-          <p>
-            Quickly and easily send REST and SOAP requests.
-          </p>
-          <router-link to="/todo" tag="button">ToDo</router-link>
-          <router-link to="/about" tag="button">About</router-link>
+      <img id="logo" src="~@/assets/logo2.png" alt="electron-vue">
+      <main>
+        <div class="left-side">
+            <span class="title">Information</span>
+            
         </div>
-        <div class="doc">
-          <div class="title alt">Other Documentation</div>
-          <button class="alt" @click="open('https://electron.atom.io/docs/')">Electron</button>
-          <button class="alt" @click="open('https://vuejs.org/v2/guide/')">Vue.js</button>
+        <div class="right-side">
+            <div class="doc">
+                <div class="title">ToDo</div>
+                <p>
+                    Welcome to the ToDo Page!
+                </p>
+                <router-link to="/" tag="button">Home</router-link>
+                <button @click="fetchTodos()" class="btn btn-primary">Fetch Todos</button>
+                <ul>
+                    <li v-for="todo in todos" :key="todo.id"></li>
+                </ul>
+             </div>
         </div>
-      </div>
-    </main>
+      </main>
   </div>
 </template>
 
 <script>
-  import SystemInformation from './LandingPage/SystemInformation'
-
+  const axios = require('axios')
   export default {
-    name: 'landing-page',
-    components: { SystemInformation },
+    name: 'ToDos',
+    data: () => {
+      return {
+        todos: []
+      }
+    },
     methods: {
-      open (link) {
-        this.$electron.shell.openExternal(link)
+      async fetchTodos () {
+        axios
+          .get('http://localhost:3001/')
+          .then(response => {
+            this.todos = response.data
+          })
+          .catch(error => {
+            if (error) throw new Error(error)
+          })
       }
     }
   }
