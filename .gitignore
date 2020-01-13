@@ -11,3 +11,5 @@ thumbs.db
 
 # webstorm files
 .idea/
+
+package-lock.json
